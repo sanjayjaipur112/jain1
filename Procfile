@@ -1,1 +1,1 @@
-web: python jain_engine.py
+web: gunicorn jain_engine:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120
