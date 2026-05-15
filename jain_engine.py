@@ -136,7 +136,7 @@ def db_update_campaign(campaign_id: str, updates: dict) -> None:
 # AI helpers
 # ---------------------------------------------------------------------------
 
-def _call_openrouter(prompt: str, model: str = "mistralai/mistral-7b-instruct") -> str:
+def _call_openrouter(prompt: str, model: str = "meta-llama/llama-3.1-8b-instruct:free") -> str:
     """Call OpenRouter chat completions API."""
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
@@ -199,7 +199,7 @@ def generate_personalized_email(contact: dict, campaign: dict, sequence_step: in
     raw = ""
     try:
         if OPENROUTER_API_KEY:
-            raw = _call_openrouter(prompt)
+            raw = _call_openrouter(prompt, model="meta-llama/llama-3.1-8b-instruct:free")
         elif ANTHROPIC_API_KEY:
             raw = _call_anthropic(prompt)
         else:
@@ -242,7 +242,7 @@ def classify_reply(email_body: str) -> str:
     )
     try:
         if OPENROUTER_API_KEY:
-            result = _call_openrouter(prompt)
+            result = _call_openrouter(prompt, model="meta-llama/llama-3.1-8b-instruct:free")
         elif ANTHROPIC_API_KEY:
             result = _call_anthropic(prompt)
         else:
@@ -270,7 +270,7 @@ def generate_objection_response(contact: dict, campaign: dict, objection_text: s
     raw = ""
     try:
         if OPENROUTER_API_KEY:
-            raw = _call_openrouter(prompt)
+            raw = _call_openrouter(prompt, model="meta-llama/llama-3.1-8b-instruct:free")
         elif ANTHROPIC_API_KEY:
             raw = _call_anthropic(prompt)
         json_match = re.search(r"\{.*\}", raw, re.DOTALL)
